@@ -61,6 +61,10 @@ class Productos(Resource):
         )
     def post(self):
         producto = ProductoModel.from_json(request.get_json())
-        db.session.add(producto)
-        db.session.commit()
-        return producto.to_json(), 201
+        try:
+            db.session.add(producto)
+            db.session.commit()
+            return producto.to_json(), 201
+        except:
+            db.session.rollback()
+            return 301
