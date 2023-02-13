@@ -25,7 +25,7 @@ def create_app():
   # configuracion base de datos
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost/negocioCesar"
-  app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:pWts4kg32GJw8BGUgcfy@containers-us-west-179.railway.app:7838/railway"
+  app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:Goo3Ylm4pLdJENKgIyGU@containers-us-west-189.railway.app:6084/railway"
 
   db.init_app(app)
 
