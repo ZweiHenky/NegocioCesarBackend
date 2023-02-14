@@ -9,3 +9,4 @@ flask-jwt-extended
 gunicorn
 marshmallow
 PyMySQL
+Flask-Cors

@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # importar el modulo jwt
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 api = Api()
 
@@ -15,9 +16,13 @@ db = SQLAlchemy()
 
 jwt = JWTManager()
 
+
+
 def create_app():
 
   app = Flask(__name__)
+
+  cors = CORS(app, resources = {r'/*': {'origins': '*'} })
 
   # cargar variables de entorno
   load_dotenv()
