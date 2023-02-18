@@ -8,6 +8,7 @@ class Usuario(db.Model):
     password = db.Column(db.String(300), nullable = False)
     role = db.Column(db.String(20), nullable = False, default = 'vendedor')
     status = db.Column(db.Boolean, nullable = False, default = False)
+    local = db.Column(db.Integer, nullable = False)
     ventas_usuario = db.relationship('Venta', back_populates = 'usuario')
 
     def __repr__(self) -> str:
@@ -29,7 +30,8 @@ class Usuario(db.Model):
             "email": self.email,
             "nombre": self.nombre,
             "role": self.role,
-            "status": self.status
+            "status": self.status,
+            "local": self.local
         }
         return usuario_json
     
@@ -40,11 +42,13 @@ class Usuario(db.Model):
         password = usuario_json.get("password")
         role = usuario_json.get("rol")
         status = usuario_json.get("status")
+        local = usuario_json.get("local")
 
         return Usuario(
             email = email,
             nombre = nombre,
             plain_password = password,
             role = role,
-            status = status
+            status = status,
+            local = local
         )

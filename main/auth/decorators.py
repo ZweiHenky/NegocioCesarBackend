@@ -19,12 +19,14 @@ def role_required(roles):
 def user_identity_lookup(usuario):
   return {
     'email': usuario.email,
-    'role': usuario.role
+    'role': usuario.role,
+    'local': usuario.local
   }
 
 @jwt.additional_claims_loader
 def add_claims_to_access_token(usuario):
   claims = {
     'role': usuario.role,
-    'email': usuario.email
+    'email': usuario.email,
+    'local': usuario.local
   }
