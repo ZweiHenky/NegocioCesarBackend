@@ -20,7 +20,7 @@ class Usuario(Resource):
             return usuario.to_json(),201
         except:
             return {
-                "message":"ocurrio un error al intentar actualizar el usuairo",
+                "message":"Ocurrio un error al intentar actualizar el usuairo",
                 "status": "error"
             },505
 

@@ -19,11 +19,16 @@ def login():
         'email': usuario.email,
         'nombre': usuario.nombre,
         'access_token': access_token,
-        'role': str(usuario.role)
+        'role': str(usuario.role),
+        'status': usuario.status,
+        'local': usuario.local
+
     }
     return data, 200
   else:
-    return 'Incorrect password', 401
+    return {
+      'messgae': 'Usuario o Contraseña incorrecta'
+    }, 401
 
 @auth.route('/register', methods=['POST'])
 def register():
@@ -31,7 +36,7 @@ def register():
   exits = db.session.query(UsuarioModel).filter(UsuarioModel.email == usuario.email).scalar() is not None
   if exits:
     return {
-      "message": 'ya existe ese email'
+      "message": 'El correo ya esta en uso'
     }, 409
   else:
     try:
