@@ -63,6 +63,7 @@ class Productos(Resource):
         except:
             db.session.rollback()
             return 404
+        
     def post(self):
         producto = ProductoModel.from_json(request.get_json())
         try:
@@ -71,4 +72,6 @@ class Productos(Resource):
             return producto.to_json(), 201
         except:
             db.session.rollback()
-            return 301
+            return {
+                'message' : 'el producto ya existe'
+            }

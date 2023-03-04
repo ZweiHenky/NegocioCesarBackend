@@ -26,6 +26,7 @@ def login():
     }
     return data, 200
   else:
+    db.session.rollback()
     return {
       'messgae': 'Usuario o Contraseña incorrecta'
     }, 401
