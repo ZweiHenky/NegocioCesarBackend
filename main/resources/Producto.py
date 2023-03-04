@@ -74,4 +74,4 @@ class Productos(Resource):
             db.session.rollback()
             return {
                 'message' : 'el producto ya existe'
-            }
+            }, 400
