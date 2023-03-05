@@ -11,25 +11,30 @@ def login():
   #Buscamos al usuario en la db mediante el mail
   usuario = db.session.query(UsuarioModel).filter(UsuarioModel.email == request.get_json().get('email')).first_or_404()
   #Validamos la contraseña de ese usuario
-  if usuario.validate_password(request.get_json().get("password")):
-    #Generamos un nuevo token y le pasamos al usuario como identidad de es token
-    access_token = create_access_token(identity=usuario)
-    #Devolvemos los valores y el token
-    data = {
-        'email': usuario.email,
-        'nombre': usuario.nombre,
-        'access_token': access_token,
-        'role': str(usuario.role),
-        'status': usuario.status,
-        'local': usuario.local
+  try:
+    if usuario.validate_password(request.get_json().get("password")):
+      #Generamos un nuevo token y le pasamos al usuario como identidad de es token
+      access_token = create_access_token(identity=usuario)
+      #Devolvemos los valores y el token
+      data = {
+          'email': usuario.email,
+          'nombre': usuario.nombre,
+          'access_token': access_token,
+          'role': str(usuario.role),
+          'status': usuario.status,
+          'local': usuario.local
 
-    }
-    return data, 200
-  else:
+      }
+      return data, 200
+    else:
+      return {
+        'messgae': 'Usuario o Contraseña incorrecta'
+      }, 401
+  except:
     db.session.rollback()
     return {
-      'messgae': 'Usuario o Contraseña incorrecta'
-    }, 401
+        'messgae': 'Error al iniciar sesion'
+      }, 401
 
 @auth.route('/register', methods=['POST'])
 def register():
