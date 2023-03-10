@@ -49,7 +49,8 @@ class Producto(Resource):
             db.session.commit()
             return producto.to_json()
         except:
-            return 'error en la actualizacion', 404
+            db.session.rollback()
+            return {'message':'error en la actualizacion'}, 404
 
 class Productos(Resource):
     def get(self):
