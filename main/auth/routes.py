@@ -35,6 +35,8 @@ def login():
     return {
         'messgae': 'Error al iniciar sesion'
       }, 401
+  finally:
+    db.session.close()
 
 @auth.route('/register', methods=['POST'])
 def register():
