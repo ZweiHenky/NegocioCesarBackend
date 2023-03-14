@@ -38,7 +38,7 @@ class CompraFecha(Resource):
         try:
             if(compras == []):
                 return {
-                    "message": "No hay ningun producto con ese nombre"
+                    "message": "No hay compras con esa fecha"
                 }, 404
             else:
                 return jsonify(
