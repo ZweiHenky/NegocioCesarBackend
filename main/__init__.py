@@ -31,7 +31,7 @@ def create_app():
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   app.config['SQLALCHEMY_ENGINE_OPTIONS'] ={
     "pool_pre_ping": True, 
-    "pool_recycle": 300,
+    "pool_recycle": 3600,
   }
   # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost/negocioCesar"
   app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:Goo3Ylm4pLdJENKgIyGU@containers-us-west-189.railway.app:6084/railway"

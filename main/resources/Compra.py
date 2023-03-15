@@ -18,6 +18,8 @@ class Compra(Resource):
             return{
                 "message": "ocurrio un error, vuelva a intentarlo"
             }, 404
+        finally:
+            db.session.close()
 
     def put(self, id_compra):
         compra = db.session.query(CompraModel).get_or_404(id_compra)
@@ -28,7 +30,11 @@ class Compra(Resource):
             db.session.add(compra)
             db.session.commit()
         except:
-            return '',404
+            return {
+                'message':'Ocurrio Un problema'
+            },404
+        finally:
+            db.session.close()
 
     
 
@@ -50,6 +56,8 @@ class CompraFecha(Resource):
             return {
                 "message": "Error"
             }, 404
+        finally:
+            db.session.close()
 
 class Compras(Resource):
 
@@ -66,10 +74,13 @@ class Compras(Resource):
                 return {
                     "message": "ocurrio un problema"
                 }, 404
+            finally:
+                db.session.close()
         else:
             return{
                 "message": "no existe ese producto"
             }, 404
+        
 
         
     def get(self):
