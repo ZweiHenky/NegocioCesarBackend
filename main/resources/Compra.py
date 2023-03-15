@@ -8,11 +8,11 @@ class Compra(Resource):
     def delete(self, id_compra):
         compra = db.session.query(CompraModel).get(id_compra)
         try:
+            ModificarInventarioPorEliminacion(compra)
             db.session.delete(compra)
             db.session.commit()
             return {
-                "message": "se elimino con exito",
-                "status": "ok"
+                "message": "se elimino con exito"
             }, 201
         except:
             return{
@@ -78,7 +78,7 @@ class Compras(Resource):
                 db.session.close()
         else:
             return{
-                "message": "no existe ese producto"
+                "message": "No existe ese producto"
             }, 404
         
 
@@ -105,3 +105,10 @@ def modificarInventario(inventario_json):
         setattr(inventario, "detalle_inventario", detalle_inventario)
         setattr(inventario, "cantidad_inventario", cantidad_total)
         db.session.add(inventario)
+
+def ModificarInventarioPorEliminacion(compra):
+    detalle = compra.detalle_producto_compra
+    inventario = db.session.query(InventarioModel).filter(InventarioModel.detalle_inventario == detalle).first()
+    cantidad_total = inventario.cantidad_inventario - compra.cantidad_compra
+    setattr(inventario, 'cantidad_inventario', cantidad_total)
+    db.session.add(inventario)
