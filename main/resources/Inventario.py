@@ -8,8 +8,16 @@ class Inventarios(Resource):
     
     def get(self):
         inventarios = db.session.query(InventarioModel).all()
-        return jsonify(
-            {
-                "inventario": [inventario.to_json() for inventario in inventarios]
+        try:
+            return jsonify(
+                {
+                    "inventario": [inventario.to_json() for inventario in inventarios]
+                }
+            )
+        except:
+            return {
+                'message':'ocurrio un error'
             }
-        )
+        finally:
+            db.session.close()
+        
