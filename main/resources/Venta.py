@@ -35,6 +35,8 @@ class Ventas(Resource):
                 "message": "ocurrio un error",
                 "status": "error"
             },400
+        finally:
+            db.session.close()
 
 
 def comprobarProductoLocal(detalle_venta, cantidad_venta, local_venta):

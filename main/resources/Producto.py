@@ -21,6 +21,8 @@ class Producto(Resource):
             return {
                 "message": "Error"
             }, 404
+        finally:
+            db.session.close()
 
     
 
@@ -38,6 +40,8 @@ class Producto(Resource):
                 "message": "ocurrio un error al intentar eliminarlo",
                 "status": "error"
             }, 404
+        finally:
+            db.session.close()
 
     def put(self, detalle):
         producto = db.session.query(ProductoModel).get(detalle)
@@ -51,6 +55,8 @@ class Producto(Resource):
         except:
             db.session.rollback()
             return {'message':'error en la actualizacion'}, 404
+        finally:
+            db.session.close()
 
 class Productos(Resource):
     def get(self):
@@ -64,6 +70,8 @@ class Productos(Resource):
         except:
             db.session.rollback()
             return 404
+        finally:
+            db.session.close()
         
     def post(self):
         producto = ProductoModel.from_json(request.get_json())
@@ -76,3 +84,5 @@ class Productos(Resource):
             return {
                 'message' : 'el producto ya existe'
             }, 400
+        finally:
+            db.session.close()

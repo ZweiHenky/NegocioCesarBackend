@@ -23,11 +23,18 @@ class Locals(Resource):
 
     def get(self):
         productos = db.session.query(LocalModel).all()
-        return jsonify(
-            {
-                "productos":[producto.to_json() for producto in productos]
+        try:
+            return jsonify(
+                {
+                    "productos":[producto.to_json() for producto in productos]
+                }
+            )
+        except:
+            return{
+                'message':'Ocurrio un error'
             }
-        )
+        finally:
+            db.session.close()
 
     def put(self):
         local = db.session.query(LocalModel).filter(
@@ -92,3 +99,5 @@ class Locals(Resource):
                     "message": "error al agregar el producto",
                     "status": "error"
                 },404
+            finally:
+                db.session.close()
