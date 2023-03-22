@@ -10,3 +10,4 @@ gunicorn
 marshmallow
 PyMySQL
 Flask-Cors
+cryptography
