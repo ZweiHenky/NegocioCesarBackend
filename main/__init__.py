@@ -55,6 +55,7 @@ def create_app():
   api.add_resource(resources.InventariosResource, '/inventarios')
   api.add_resource(resources.LocalsResource, '/locals')
   api.add_resource(resources.VentasResource, '/ventas')
+  api.add_resource(resources.VentaResource, '/venta/<fecha_venta>')
   api.add_resource(resources.DetalleVentaResource, '/detalle_venta/<id_detalle_venta>')
   api.add_resource(resources.DetalleVentasResource, '/detalle_ventas')
   api.add_resource(resources.IntercambioResource, '/intercambio')

@@ -8,6 +8,7 @@ from .Usuario import Usuarios as UsuariosResource
 from .Inventario import Inventarios as InventariosResource
 from .Local import Locals as LocalsResource
 from .Venta import Ventas as VentasResource
+from .Venta import Venta as VentaResource
 from .DetalleVenta import DetalleVenta as DetalleVentaResource
 from .DetalleVenta import DetalleVentas as DetalleVentasResource
 from .Intercambio import Intercambio as IntercambioResource

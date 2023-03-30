@@ -19,6 +19,8 @@ class DetalleVenta(Resource):
                 "message":"No se encontro la venta",
                 "estatus": "error"
             },404
+        finally:
+            db.session.close()
 
 def modificarLocalPorVenta(id_venta):
     ventas = db.session.query(VentaModel).filter(VentaModel.id_detalle_venta == id_venta).all()
@@ -43,4 +45,6 @@ class DetalleVentas(Resource):
             return {
                 "message": "ocurrio un error",
                 "status" : "error"
-            }, 201
+            }, 404
+        finally:
+            db.session.close()

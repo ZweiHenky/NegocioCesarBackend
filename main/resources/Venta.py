@@ -3,6 +3,26 @@ from flask_restful import Resource
 from .. import db
 from main.models import VentaModel, LocalModel, DetalleVentaModel
 
+class Venta(Resource):
+    def get(self, fecha_venta):
+        ventas = db.session.query(VentaModel).filter(VentaModel.fecha_venta.like('%'+fecha_venta+'%')).all()
+        try:
+            if(ventas == []):
+                return {
+                    "message": "No hay compras con esa fecha"
+                }, 404
+            else:
+                return jsonify(
+                    {
+                        'ventas': [venta.to_json() for venta in ventas]
+                    }
+                )
+        except:
+            return {
+                "message": "Error"
+            }, 404
+        finally:
+            db.session.close()
 
 class Ventas(Resource):
     def get(self):
