@@ -8,7 +8,7 @@ class Venta(db.Model):
     cantidad_venta = db.Column(db.Integer, nullable = False)
     metodo_pago_venta = db.Column(db.String(20), nullable = False)
     otro_precio = db.Column(db.Integer, nullable = True)
-    fecha_venta = db.Column(db.DateTime, default = dt.datetime.now(), nullable = False)
+    fecha_venta = db.Column(db.DateTime(timezone=True), default = dt.datetime.utcnow(), nullable = False)
     detalle_venta = db.Column(db.String(70), db.ForeignKey('Producto.detalle'), nullable = True )
     producto = db.relationship('Producto', back_populates = 'ventas', uselist = False)
     usuario_venta = db.Column(db.String(80), db.ForeignKey('Usuario.email'), nullable = True)
