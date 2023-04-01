@@ -1,6 +1,6 @@
 from .. import db
 import datetime as dt
-
+# (timezone=True)
 class Venta(db.Model):
     __tablename__ = 'Venta'
     id = db.Column(db.Integer, primary_key = True)
@@ -8,7 +8,7 @@ class Venta(db.Model):
     cantidad_venta = db.Column(db.Integer, nullable = False)
     metodo_pago_venta = db.Column(db.String(20), nullable = False)
     otro_precio = db.Column(db.Integer, nullable = True)
-    fecha_venta = db.Column(db.DateTime, default = dt.datetime.utcnow, nullable = False)
+    fecha_venta = db.Column(db.DateTimex, default = dt.datetime.now(dt.timezone.utc), nullable = False)
     detalle_venta = db.Column(db.String(70), db.ForeignKey('Producto.detalle'), nullable = True )
     producto = db.relationship('Producto', back_populates = 'ventas', uselist = False)
     usuario_venta = db.Column(db.String(80), db.ForeignKey('Usuario.email'), nullable = True)
