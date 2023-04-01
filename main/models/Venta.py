@@ -1,8 +1,8 @@
 from .. import db
 import datetime as dt
-import zoneinfo
+import pytz
 
-zone = zoneinfo.ZoneInfo('America/Mexico_City')
+zone = pytz.timezone('America/Mexico_City')
 
 class Venta(db.Model):
     __tablename__ = 'Venta'
