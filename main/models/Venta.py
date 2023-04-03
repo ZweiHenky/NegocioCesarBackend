@@ -2,7 +2,7 @@ from .. import db
 import datetime as dt
 import pytz
 
-zone = pytz.timezone('America/Mexico_City')
+zoneMexico = pytz.timezone('America/Mexico_City')
 
 class Venta(db.Model):
     __tablename__ = 'Venta'
@@ -11,7 +11,7 @@ class Venta(db.Model):
     cantidad_venta = db.Column(db.Integer, nullable = False)
     metodo_pago_venta = db.Column(db.String(20), nullable = False)
     otro_precio = db.Column(db.Integer, nullable = True)
-    fecha_venta = db.Column(db.DateTime, default = dt.datetime.now(zone), nullable = False)
+    fecha_venta = db.Column(db.DateTime, default = zoneMexico.localize(dt.datetime.now()), nullable = False)
     detalle_venta = db.Column(db.String(70), db.ForeignKey('Producto.detalle'), nullable = True )
     producto = db.relationship('Producto', back_populates = 'ventas', uselist = False)
     usuario_venta = db.Column(db.String(80), db.ForeignKey('Usuario.email'), nullable = True)
