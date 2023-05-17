@@ -78,7 +78,10 @@ class Productos(Resource):
         try:
             db.session.add(producto)
             db.session.commit()
-            return producto.to_json(), 201
+            return {
+                'message': 'producto creado',
+                'producto' : producto.to_json(),
+            }, 201
         except:
             db.session.rollback()
             return {
