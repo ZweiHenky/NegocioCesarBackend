@@ -29,6 +29,9 @@ class Compra(Resource):
         try:
             db.session.add(compra)
             db.session.commit()
+            return {
+                'message':'Se actualizo correctamente la compra'
+            }
         except:
             return {
                 'message':'Ocurrio Un problema'
