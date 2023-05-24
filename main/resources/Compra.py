@@ -69,7 +69,10 @@ class Compras(Resource):
                 modificarInventario(request.get_json())
                 db.session.add(compra)
                 db.session.commit()
-                return compra.to_json(), 201
+                return {
+                    "message": "La compra se realizo con exito",
+                    "compra" : compra.to_json()
+                }, 201
             except: 
                 return {
                     "message": "ocurrio un problema"
