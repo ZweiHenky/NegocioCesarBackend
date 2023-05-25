@@ -32,13 +32,11 @@ class Producto(Resource):
             db.session.delete(producto)
             db.session.commit()
             return {
-                "message": "se elimino con exito",
-                "status": "ok"
+                "message": "se elimino con exito"
             }, 201
         except:
             return {
-                "message": "ocurrio un error al intentar eliminarlo",
-                "status": "error"
+                "message": "erro al eliminarlo"
             }, 404
         finally:
             db.session.close()
@@ -51,10 +49,14 @@ class Producto(Resource):
         try:
             db.session.add(producto)
             db.session.commit()
-            return producto.to_json()
+            return {
+                'message':'Se actualizo con exito'
+            }
         except:
             db.session.rollback()
-            return {'message':'error en la actualizacion'}, 404
+            return {
+                'message':'error en la actualizacion'
+            }, 404
         finally:
             db.session.close()
 
@@ -79,7 +81,7 @@ class Productos(Resource):
             db.session.add(producto)
             db.session.commit()
             return {
-                'message': 'producto creado',
+                'message': 'se realizo con exito',
                 'producto' : producto.to_json(),
             }, 201
         except:

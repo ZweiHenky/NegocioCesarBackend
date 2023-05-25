@@ -16,7 +16,7 @@ class Compra(Resource):
             }, 201
         except:
             return{
-                "message": "ocurrio un error, vuelva a intentarlo"
+                "message": "erro al eliminarlo"
             }, 404
         finally:
             db.session.close()
@@ -30,11 +30,11 @@ class Compra(Resource):
             db.session.add(compra)
             db.session.commit()
             return {
-                'message':'Se actualizo correctamente la compra'
+                'message':'Se actualizo con exito'
             }
         except:
             return {
-                'message':'Ocurrio Un problema'
+                'message':'error en la actualizacion'
             },404
         finally:
             db.session.close()
@@ -73,7 +73,7 @@ class Compras(Resource):
                 db.session.add(compra)
                 db.session.commit()
                 return {
-                    "message": "La compra se realizo con exito",
+                    "message": "se realizo con exito",
                     "compra" : compra.to_json()
                 }, 201
             except: 
