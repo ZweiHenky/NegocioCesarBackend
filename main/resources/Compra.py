@@ -30,7 +30,8 @@ class Compra(Resource):
             db.session.add(compra)
             db.session.commit()
             return {
-                'message':'Se actualizo con exito'
+                'message':'Se actualizo con exito',
+                'compra': compra.to_json()
             }
         except:
             return {

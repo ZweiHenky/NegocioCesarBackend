@@ -50,7 +50,7 @@ class Producto(Resource):
             db.session.add(producto)
             db.session.commit()
             return {
-                'message':'Se actualizo con exito'
+                'message':'se actualizo con exito'
             }
         except:
             db.session.rollback()
