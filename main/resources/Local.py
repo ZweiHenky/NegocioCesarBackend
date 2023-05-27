@@ -55,16 +55,18 @@ class Locals(Resource):
                     db.session.add(nuevo_inventario)
                     db.session.add(local)
                     db.session.commit()
-                    return local.to_json(), 201
+                    return {
+                            "message": 'se realizo con exito',
+                            "producto" : local.to_json(),
+                            "estado" : estado_local
+                        }, 201
                 else:
                     return {
-                        "message": "no hay suficientes productos en el inventario",
-                        "error": "error"
+                        "message": "no hay suficientes productos en el inventario"
                     },404
             except:
                 return {
-                    "message": "error al agregar el producto",
-                    "status": "error"
+                    "message": "error al agregar el producto"
                 }
         else:
             for key, value in data:
@@ -83,21 +85,22 @@ class Locals(Resource):
                         db.session.add(nuevo_inventario)
                         db.session.add(local)
                         db.session.commit()
-                        return local.to_json(), 201
+                        return {
+                            "message": 'se realizo con exito',
+                            "producto" : local.to_json(),
+                            "estado" : estado_local
+                        }, 201
                     else:
                         return {
-                            "message": "no hay suficientes productos en el local",
-                            "error": "error"
+                            "message": "no hay suficientes productos en el local"
                         },404
                 else:
                     return {
-                        "message": "no hay suficientes productos en el inventario",
-                        "error": "error"
+                        "message": "no hay suficientes productos en el inventario"
                     },404
             except:
                 return {
-                    "message": "error al agregar el producto",
-                    "status": "error"
+                    "message": "error al agregar el producto"
                 },404
             finally:
                 db.session.close()
