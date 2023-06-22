@@ -8,7 +8,7 @@ class Producto(db.Model):
     talla = db.Column(db.String(5), nullable = False)
     venta = db.Column(db.Integer, nullable = False)
     compra = db.Column(db.Integer, nullable = False)
-    compras = db.relationship('Compra', back_populates = 'producto')
+    compras = db.relationship('Compra', back_populates = 'producto', cascade='save-update, merge, , delete, delete-orphan')
     # ventas = db.relationship('Venta', back_populates = 'producto')
 
     def __repr__(self):

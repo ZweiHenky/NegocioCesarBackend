@@ -47,12 +47,16 @@ class Producto(Resource):
         for key, value in data:
             setattr(producto, key, value)
         try:
+            print('hola')
             db.session.add(producto)
+            print('hola2')
             db.session.commit()
+            print('hola3')
             return {
                 'message':'se actualizo con exito'
             }
-        except:
+        except Exception as e:
+            print(e)
             db.session.rollback()
             return {
                 'message':'error en la actualizacion'
