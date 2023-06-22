@@ -9,7 +9,7 @@ class Producto(db.Model):
     venta = db.Column(db.Integer, nullable = False)
     compra = db.Column(db.Integer, nullable = False)
     compras = db.relationship('Compra', back_populates = 'producto')
-    ventas = db.relationship('Venta', back_populates = 'producto')
+    # ventas = db.relationship('Venta', back_populates = 'producto')
 
     def __repr__(self):
         return f'Producto:{self.nombre}'

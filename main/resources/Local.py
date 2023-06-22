@@ -3,22 +3,6 @@ from flask_restful import Resource
 from main.models import LocalModel, InventarioModel
 from .. import db
 
-def modificarInventarioALocal(inventario, cantidad_local, estado_local):
-    if estado_local == "devolver":
-        cantidad_total = inventario.cantidad_inventario + cantidad_local
-    if estado_local == "agregar":
-        cantidad_total = inventario.cantidad_inventario - cantidad_local
-    estado = True
-    if cantidad_total >= 1:
-        setattr(inventario, "detalle_inventario", inventario.detalle_inventario)
-        setattr(inventario, "cantidad_inventario", cantidad_total)
-        estado = True
-        return inventario, estado
-    else:
-        estado = False
-        return inventario, estado
-
-
 class Locals(Resource):
 
     def get(self):
@@ -104,3 +88,19 @@ class Locals(Resource):
                 },404
             finally:
                 db.session.close()
+
+
+def modificarInventarioALocal(inventario, cantidad_local, estado_local):
+    if estado_local == "devolver":
+        cantidad_total = inventario.cantidad_inventario + cantidad_local
+    if estado_local == "agregar":
+        cantidad_total = inventario.cantidad_inventario - cantidad_local
+    estado = True
+    if cantidad_total >= 0:
+        setattr(inventario, "detalle_inventario", inventario.detalle_inventario)
+        setattr(inventario, "cantidad_inventario", cantidad_total)
+        estado = True
+        return inventario, estado
+    else:
+        estado = False
+        return inventario, estado

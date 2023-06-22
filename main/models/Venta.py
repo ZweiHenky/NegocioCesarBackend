@@ -12,8 +12,9 @@ class Venta(db.Model):
     metodo_pago_venta = db.Column(db.String(20), nullable = False)
     otro_precio = db.Column(db.Integer, nullable = True)
     fecha_venta = db.Column(db.DateTime, default = zoneMexico.localize(dt.datetime.now()), nullable = False)
-    detalle_venta = db.Column(db.String(70), db.ForeignKey('Producto.detalle'), nullable = True )
-    producto = db.relationship('Producto', back_populates = 'ventas', uselist = False)
+    # detalle venta local es el id de cada producto de la clase local
+    detalle_venta = db.Column(db.Integer, db.ForeignKey('Local.id_local'), nullable = True )
+    producto_local = db.relationship('Local', back_populates = 'ventas', uselist = False)
     usuario_venta = db.Column(db.String(80), db.ForeignKey('Usuario.email'), nullable = True)
     usuario = db.relationship('Usuario', back_populates = 'ventas_usuario', uselist = False)
     id_detalle_venta = db.Column(db.Integer, db.ForeignKey('DetalleVenta.id_detalle_venta'), nullable = False)
@@ -24,7 +25,7 @@ class Venta(db.Model):
 
     def to_json(self):
 
-        if self.producto is None:
+        if self.producto_local is None:
             venta_json = {
                 "id": self.id,
                 "local_venta": self.local_venta,
@@ -32,7 +33,7 @@ class Venta(db.Model):
                 "metodo_pago_venta": self.metodo_pago_venta,
                 "otro_precio": self.otro_precio,
                 "fecha_venta": str(self.fecha_venta),
-                "producto": "el producto se ha eliminado",
+                "producto_local": "el producto se ha eliminado",
                 "usuario": self.usuario.to_json(),
                 "detalle_venta_venta": self.detalle_venta_venta.to_json()
             }
@@ -44,7 +45,7 @@ class Venta(db.Model):
                 "metodo_pago_venta": self.metodo_pago_venta,
                 "otro_precio": self.otro_precio,
                 "fecha_venta": str(self.fecha_venta),
-                "producto": self.producto.to_json(),
+                "producto_local": self.producto_local.to_json(),
                 "usuario": self.usuario.to_json(),
                 "detalle_venta_venta": self.detalle_venta_venta.to_json()
             }

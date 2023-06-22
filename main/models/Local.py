@@ -6,6 +6,7 @@ class Local(db.Model):
     detalle_local = db.Column(db.String(70), nullable = False)
     cantidad_local = db.Column(db.Integer, nullable = False)
     local_local = db.Column(db.Integer, nullable = False)
+    ventas = db.relationship('Venta', back_populates = 'producto_local')
 
     def __repr__(self) -> str:
         return f'detalle_local : {self.detalle_local}'

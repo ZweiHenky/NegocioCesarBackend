@@ -43,6 +43,7 @@ class Ventas(Resource):
                 cantidad_venta = ventaRequest['cantidad_venta']
                 local_venta = ventaRequest['local_venta']
                 local = comprobarProductoLocal(detalle_venta, cantidad_venta, local_venta)
+
                 if local:
                     # modificarLocalPorCompra(local, cantidad_venta)
                     db.session.add(venta)
@@ -69,11 +70,13 @@ class Ventas(Resource):
 
 
 def comprobarProductoLocal(detalle_venta, cantidad_venta, local_venta):
+    local = db.session.query(LocalModel).get(detalle_venta)
     local = db.session.query(LocalModel).filter(
-        LocalModel.detalle_local == detalle_venta, 
+        LocalModel.id_local == detalle_venta, 
         LocalModel.local_local == local_venta, 
         LocalModel.cantidad_local >= cantidad_venta
     ).first()
+    print(local)
     if local:
         return local
     else:

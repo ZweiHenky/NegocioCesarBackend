@@ -34,8 +34,7 @@ def create_app():
     "pool_recycle": 3600,
   }
   # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost/negocioCesar"
-  app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:ZcoptLbXwRM9mBo8bBQW@containers-us-west-189.railway.app:6084/railway"
-                                            
+  app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:cW89DeO7ERSguoqC7LKL@containers-us-west-83.railway.app:6990/railway"
 
   db.init_app(app)
 
