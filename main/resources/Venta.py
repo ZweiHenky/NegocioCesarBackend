@@ -34,23 +34,32 @@ class Ventas(Resource):
         )
 
     def post(self):
-        venta = VentaModel.from_json(request.get_json())
-        detalle_venta = request.get_json().get("detalle_venta")
-        cantidad_venta = request.get_json().get("cantidad_venta")
-        local_venta = request.get_json().get("local_venta")
-        local = comprobarProductoLocal(detalle_venta, cantidad_venta, local_venta)
+        requestSend = request.get_json()
+        responseVentas = []
         try:
-            if local:
-                modificarLocalPorCompra(local, cantidad_venta)
-                db.session.add(venta)
-                db.session.commit()
-                return venta.to_json(),201
-            else:
-                return {
-                    "message": "no existe el producto o no hay suficientes productos",
-                    "status": "error"
-                },404
-        except:
+            for ventaRequest in requestSend :
+                venta = VentaModel.from_json(ventaRequest)
+                detalle_venta = ventaRequest['detalle_venta']
+                cantidad_venta = ventaRequest['cantidad_venta']
+                local_venta = ventaRequest['local_venta']
+                local = comprobarProductoLocal(detalle_venta, cantidad_venta, local_venta)
+                if local:
+                    # modificarLocalPorCompra(local, cantidad_venta)
+                    db.session.add(venta)
+                    responseVentas.append(ventaRequest)
+                else:
+                    return {
+                        "message": "no existe el producto o no hay suficientes productos",
+                        "status": "error"
+                    },404
+            
+            db.session.commit()
+            return{
+                'message': 'se realizo con exito',
+                'ventas' : responseVentas
+            }
+        except Exception as e:
+            print(e)
             return {
                 "message": "ocurrio un error",
                 "status": "error"
