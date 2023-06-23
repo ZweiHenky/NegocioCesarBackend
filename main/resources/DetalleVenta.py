@@ -6,6 +6,7 @@ from .. import db
 class DetalleVenta(Resource):
     def delete(self, id_detalle_venta):
         id_venta = db.session.query(DetalleVentaModel).get(id_detalle_venta)
+
         try:
             modificarLocalPorVenta(id_detalle_venta)
             db.session.delete(id_venta)
@@ -24,9 +25,10 @@ class DetalleVenta(Resource):
 
 def modificarLocalPorVenta(id_venta):
     ventas = db.session.query(VentaModel).filter(VentaModel.id_detalle_venta == id_venta).all()
+
     for venta in ventas:
         devolucion = db.session.query(LocalModel).filter(
-            LocalModel.detalle_local == venta.detalle_venta,
+            LocalModel.detalle_local == venta.producto_local.detalle_local,
             LocalModel.local_local == venta.local_venta
             ).first()
         cantidad_total = venta.cantidad_venta + devolucion.cantidad_local
