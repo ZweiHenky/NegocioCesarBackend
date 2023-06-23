@@ -36,6 +36,7 @@ class Ventas(Resource):
     def post(self):
         requestSend = request.get_json()
         responseVentas = []
+        responeseToJson = []
         try:
             for ventaRequest in requestSend :
                 venta = VentaModel.from_json(ventaRequest)
@@ -47,17 +48,18 @@ class Ventas(Resource):
                 if local:
                     # modificarLocalPorCompra(local, cantidad_venta)
                     db.session.add(venta)
-                    responseVentas.append(ventaRequest)
+                    responseVentas.append(venta)
                 else:
                     return {
                         "message": "no existe el producto o no hay suficientes productos",
                         "status": "error"
                     },404
-            
             db.session.commit()
+            for v in responseVentas:
+                responeseToJson.append(v.to_json())
             return{
                 'message': 'se realizo con exito',
-                'ventas' : responseVentas
+                'ventas' : responeseToJson
             }
         except Exception as e:
             print(e)
@@ -76,7 +78,6 @@ def comprobarProductoLocal(detalle_venta, cantidad_venta, local_venta):
         LocalModel.local_local == local_venta, 
         LocalModel.cantidad_local >= cantidad_venta
     ).first()
-    print(local)
     if local:
         return local
     else:
