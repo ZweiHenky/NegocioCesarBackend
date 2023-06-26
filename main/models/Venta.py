@@ -1,5 +1,8 @@
 from .. import db
 import datetime as dt
+import pytz
+
+zoneMexico = pytz.timezone('America/Mexico_City')
 
 class Venta(db.Model):
     __tablename__ = 'Venta'
@@ -8,7 +11,7 @@ class Venta(db.Model):
     cantidad_venta = db.Column(db.Integer, nullable = False)
     metodo_pago_venta = db.Column(db.String(20), nullable = False)
     otro_precio = db.Column(db.Integer, nullable = True)
-    fecha_venta = db.Column(db.DateTime, default = dt.datetime.utcnow, nullable = False)
+    fecha_venta = db.Column(db.DateTime, default =lambda: dt.datetime.now(zoneMexico), nullable = False)
     # detalle venta local es el id de cada producto de la clase local
     detalle_venta = db.Column(db.Integer, db.ForeignKey('Local.id_local'), nullable = True )
     producto_local = db.relationship('Local', back_populates = 'ventas', uselist = False)

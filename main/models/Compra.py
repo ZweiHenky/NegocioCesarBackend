@@ -1,11 +1,14 @@
 from .. import db
 import datetime as dt
+import pytz
+
+zoneMexico = pytz.timezone('America/Mexico_City')
 
 class Compra(db.Model):
     __tablename__ = 'Compra'
     id_compra = db.Column(db.Integer, primary_key = True)
     cantidad_compra = db.Column(db.Integer, nullable = False)
-    fecha_compra = db.Column(db.DateTime, default=dt.datetime.utcnow, nullable = False)
+    fecha_compra = db.Column(db.DateTime, default =lambda: dt.datetime.now(zoneMexico), nullable = False)
     detalle_producto_compra = db.Column(db.String(70), db.ForeignKey('Producto.detalle'), nullable = True)
     producto = db.relationship('Producto', back_populates = 'compras', uselist = False)
 
